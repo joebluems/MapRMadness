@@ -14,7 +14,7 @@ Note: currently uses 2015 bracket for testing.
 - Weight on recent record (i.e. hot teams)
 
 ### Program call:
-./bracket.py <seed_weight> <br>
+./bracket.py [seed_weight] <br>
 - Produces a winner of each game in the tournament; seed weight is optional <br>
 - The results will be different for each run based on randomness
 - Game = "g+round+game" (e.g. g3_7 = 7th game of round #3) <br>
