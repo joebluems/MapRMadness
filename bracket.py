@@ -36,12 +36,18 @@ else: weights=[0.1,0.8,0.45,0.6,0.7,0.8,-1]
 #####################################
 season="cbb2015_noheader.csv"
 id={}
-names={}
 with open(season, 'rb') as csvfile:
   lines = csv.reader(csvfile)
   for row in lines:
 	id[row[0]]=row
-	names[row[1]]=int(row[0])
+
+#####################################
+team_names="official_team_names"
+names={}
+with open(team_names, 'rb') as csvfile:
+  lines = csv.reader(csvfile)
+  for row in lines:
+        names[row[0]]=row[2]
 
 ### verify that the cinderella team is valid ###
 if str(weights[6]) not in id: weights[6]="0"
@@ -138,7 +144,7 @@ with open(bracket0, 'rb') as csvfile:
   lines = csv.reader(csvfile)
   for row in lines:
      winner,rank = playgame(row,0,str(weights[6]))
-     print row[0],": ",winner,id[winner][1] 
+     print row[0],": ",winner,names[winner]
      round0[row[5]]=winner+","+rank
 
 #####################################
@@ -154,7 +160,7 @@ with open(bracket, 'rb') as csvfile:
 	for a in round0[row[0]].split(','):
 	  row.append(a)
      winner,rank = playgame(row,1,str(weights[6]))
-     print row[0],": ",winner,id[winner][1]
+     print row[0],": ",winner,names[winner]
      ### move winner to the next round ###
      rnum,gnum = re.sub(r'g','',row[0]).split('_')
      rnew = int(rnum)+1
@@ -172,7 +178,7 @@ with open(bracket, 'rb') as csvfile:
 for r in 2,3,4,5,6:
   for a in games[r]:
     winner,rank = playgame(games[r][a],r,str(weights[6]))
-    print games[r][a][0],": ",winner,id[winner][1]
+    print games[r][a][0],": ",winner,names[winner]
     rnum,gnum = re.sub(r'g','',games[r][a][0]).split('_')
     rnew = int(rnum)+1
     gnew = int(math.ceil(float(gnum)/2))
